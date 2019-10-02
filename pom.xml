@@ -134,6 +134,24 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- SLACK -->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-slack</artifactId>			
+		</dependency>
+
+		<!-- Telegram -->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-telegram</artifactId>
+			<!-- use the same version as your Camel core version -->
+		</dependency>
+		<!-- Twitter -->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-twitter</artifactId>
+		</dependency>
+
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
