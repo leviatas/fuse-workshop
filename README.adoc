@@ -1,14 +1,9 @@
 = Red Hat Fuse Workshop application
 
-This is a Red Hat Fuse (Camel) project to use with Red Hat workshop. 
+This is a Red Hat Fuse (Camel) project made by https://github.com/hodrigohamalho
 
-All the labs instructions https://github.com/hodrigohamalho/fuse-workshop-doc[are here].
+I added Twitter, Slack and Telegram integration to it.
 
 == Running project locally 
 
     mvn spring-boot:run
-
-== Deploy on openshift 
-
-    mvn fabric8:deploy -Popenshift -DskipTests
-
