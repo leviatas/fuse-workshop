@@ -31,3 +31,5 @@ target/
 .settings/
 
 src/main/resources/application-mydata.properties
+src/main/resources/application.properties
+src/main/resources/application.properties

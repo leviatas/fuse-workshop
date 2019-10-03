@@ -11,12 +11,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class OrderGenerator extends RouteBuilder {
-    
-    /* final CamelContext camel = new DefaultCamelContext();
-    final SlackComponent slackComponent = (SlackComponent) camel.getComponent("slack");
-    slackComponent.setWebhookUrl("https://hooks.slack.com/services/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");
- */
+public class OrderGenerator extends RouteBuilder {    
     @Value("${slack.webhookUrl.url}")
 	private String webhookUrl;
 
@@ -43,9 +38,13 @@ public class OrderGenerator extends RouteBuilder {
                     .to("file:./tmp/fuse-workshop/activemq?fileName=activemq-${date:now:yyyy-MM-dd-HHmmssSSS}.txt");
          */
         from("direct:book-to-file")
+        .doTry()
             .log("Sending Order to slack")
             //.to("slack:#general");
-            .toF("slack:#general:generate?webhookUrl=%s", webhookUrl);
+            .toF("slack:#general:generate?webhookUrl=%s", webhookUrl)
+        .doCatch(Exception.class)
+            .log("Error en Slack repeater")
+        .end();           
 
 
         from("file:./tmp/fuse-workshop/activemq?delete=true")

@@ -5,6 +5,8 @@ import org.apache.camel.component.twitter.search.TwitterSearchComponent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import twitter4j.TwitterException;
+
 /**
  * This class is responsible for routing the messages from and to the Telegram chat.
  */
@@ -40,10 +42,35 @@ public class TwitterSearcher extends RouteBuilder {
         tc.setConsumerKey(consumerKey);
         tc.setConsumerSecret(consumerSecret);
 
-        fromF("twitter-search://%s?delay=%s", searchTerm, searchDelay)
-            .log("${body}");
-            // and push tweets to all web socket subscribers on camel-tweet
-            //.to("websocket:camel-tweet?sendToAll=true");
+        // Si quiero que me mande empty cuando no haya nada.
+        /* fromF("twitter-search://%s?delay=%s&sendEmptyMessageWhenIdle=true", searchTerm, searchDelay) */
+        
+        fromF("twitter-search://%s?delay=%s", searchTerm, searchDelay)//.marshal().json()
+        .choice()
+        .when(simple("${body} == ''"))
+            .log("No hay Tweets nuevos")            
+        .otherwise() 
+            .log("El mensaje es: *${body}*");
+
+        /* fromF("twitter-search://%s?delay=%s", searchTerm, searchDelay)
+            .doTry()
+            .log("${body}")
+        .doCatch(TwitterException.class)
+            .log("Error en Twitter Searcher")
+        .end(); */
+
+        
+
+        /* from("timer:generate?repeatCount=1")
+        .doTry()    
+            .log("Checking Twitter messages")
+            .toF("twitter-search://%s?delay=%s", searchTerm, searchDelay)
+            .log("${body}")
+        .doCatch(TwitterException.class)
+            .log("Error en Twitter Searcher")
+        .end(); */
+                // and push tweets to all web socket subscribers on camel-tweet
+                //.to("websocket:camel-tweet?sendToAll=true");
 
     }
 }
