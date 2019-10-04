@@ -5,8 +5,6 @@ import org.apache.camel.component.twitter.search.TwitterSearchComponent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import twitter4j.TwitterException;
-
 /**
  * This class is responsible for routing the messages from and to the Telegram chat.
  */
@@ -46,6 +44,8 @@ public class TwitterSearcher extends RouteBuilder {
         /* fromF("twitter-search://%s?delay=%s&sendEmptyMessageWhenIdle=true", searchTerm, searchDelay) */
         
         fromF("twitter-search://%s?delay=%s", searchTerm, searchDelay)//.marshal().json()
+        .routeId("twitter_searcher")
+        .noAutoStartup()
         .choice()
         .when(simple("${body} == ''"))
             .log("No hay Tweets nuevos")            

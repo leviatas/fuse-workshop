@@ -4,6 +4,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 import com.redhat.fuse.boosters.rest.model.Order;
+import com.redhat.fuse.boosters.rest.model.TwitterSearchRequest;;
 
 @Component
 public class RestRouter extends RouteBuilder {
@@ -12,6 +13,28 @@ public class RestRouter extends RouteBuilder {
     public void configure() throws Exception {
 
         // insert your rest code here
+        rest("/telegram")
+            .put("/toggle").description("Toggle Start/Stop Telegram Bot")
+                .route().routeId("telegram-toggle")
+                .process(new ToggleRouteProcessor("telegram_bot"))
+                .log("${body}")                
+                .endRest();
+        
+        rest("/twitter")
+            .put("/toggle").type(TwitterSearchRequest.class).description("Toggle Start/Stop Twitter searcher")
+                .route().routeId("twitter-toggle")
+                .log("${body}")
+                .process(new ToggleRouteProcessor("twitter_searcher"))
+                .log("${body}")                
+                .endRest();
+        
+        rest("/ordergenerator")
+            .put("/toggle").description("Toggle Start/Stop ordergenerator searcher")
+                .route().routeId("ordergenerator-toggle")
+                .process(new ToggleRouteProcessor("order_generator"))
+                .log("${body}")                
+                .endRest();
+                
         rest("/orders")
             .get("/").description("Get all orders")
                 .route().routeId("all-orders")
@@ -44,6 +67,8 @@ public class RestRouter extends RouteBuilder {
 
             // Consume from the message broker queue
             from("activemq:queue:orders")
+            .routeId("queue_consumer")
+            .noAutoStartup()
                 .log("received ${body.item} from JMS queue")
                 .to(this.insertOrder)
                 .to("mock:notify-by-email");

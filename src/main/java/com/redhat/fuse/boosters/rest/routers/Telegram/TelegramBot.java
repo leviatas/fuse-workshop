@@ -1,9 +1,4 @@
 package com.redhat.fuse.boosters.rest.routers.Telegram;
-
-import java.net.ConnectException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +25,8 @@ public class TelegramBot extends RouteBuilder {
         getContext().setGlobalOptions(map);*/
         
         fromF("telegram:bots/%s", token)
+            .routeId("telegram_bot")
+            .noAutoStartup()
             .bean(bot)
         .toF("telegram:bots/%s", token);
         

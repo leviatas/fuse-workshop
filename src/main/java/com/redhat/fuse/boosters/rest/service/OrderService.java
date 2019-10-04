@@ -1,6 +1,5 @@
 package com.redhat.fuse.boosters.rest.service;
 
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 

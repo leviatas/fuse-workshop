@@ -19,6 +19,8 @@ public class OrderGenerator extends RouteBuilder {
     public void configure() throws Exception {
 
         from("timer:generate?repeatCount=5&period=1000")
+            .routeId("order_generator")
+            .noAutoStartup()
             .log("Generating Order...")
             .bean(OrderService.class, "generateOrder")
             .log("Order ${body.item} generated")
