@@ -63,9 +63,9 @@ public class TwitterSearcher extends RouteBuilder {
         // .otherwise() 
         //     .log("El mensaje es: *${body}*");
 
-        fromF("twitter-search://%s?delay=%s&sendEmptyMessageWhenIdle=true", searchTerm, searchDelay)
+        /* fromF("twitter-search://%s?delay=%s&sendEmptyMessageWhenIdle=true", searchTerm, searchDelay)
             .log("Twitter search Hospital ${body}")
-        .end();
+        .end(); */
 
         
 
