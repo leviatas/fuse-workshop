@@ -23,9 +23,10 @@ public class RestRouter extends RouteBuilder {
         rest("/twitter")
             .put("/toggle").type(TwitterSearchRequest.class).description("Toggle Start/Stop Twitter searcher")
                 .route().routeId("twitter-toggle")
-                .log("${body}")
-                .process(new ToggleRouteProcessor("twitter_searcher"))
-                .log("${body}")                
+                //.log("${body}")
+                .wireTap("direct:twitter-search")
+                .setBody().simple("Se comenzo pedido de datos a Twitter")
+                
                 .endRest();
         
         rest("/ordergenerator")

@@ -42,22 +42,30 @@ public class TwitterSearcher extends RouteBuilder {
 
         // Si quiero que me mande empty cuando no haya nada.
         /* fromF("twitter-search://%s?delay=%s&sendEmptyMessageWhenIdle=true", searchTerm, searchDelay) */
-        
-        fromF("twitter-search://%s?delay=%s", searchTerm, searchDelay)//.marshal().json()
+        from("direct:twitter-search")
         .routeId("twitter_searcher")
-        .noAutoStartup()
+        //.log("Los parametros son *${body}*")
+        .recipientList(simple("twitter-search://${body.term}?delay=${body.delay}&sendEmptyMessageWhenIdle=true"))  
+        .log("El mensaje es: ${body}");
+        /* 
         .choice()
         .when(simple("${body} == ''"))
             .log("No hay Tweets nuevos")            
         .otherwise() 
-            .log("El mensaje es: *${body}*");
+            .log("El mensaje es: *${body}*"); */
 
-        /* fromF("twitter-search://%s?delay=%s", searchTerm, searchDelay)
-            .doTry()
-            .log("${body}")
-        .doCatch(TwitterException.class)
-            .log("Error en Twitter Searcher")
-        .end(); */
+        // fromF("twitter-search://%s?delay=%s", searchTerm, searchDelay)//.marshal().json()
+        // .routeId("twitter_searcher")
+        // .noAutoStartup()
+        // .choice()
+        // .when(simple("${body} == ''"))
+        //     .log("No hay Tweets nuevos")            
+        // .otherwise() 
+        //     .log("El mensaje es: *${body}*");
+
+        fromF("twitter-search://%s?delay=%s&sendEmptyMessageWhenIdle=true", searchTerm, searchDelay)
+            .log("Twitter search Hospital ${body}")
+        .end();
 
         
 
