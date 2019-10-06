@@ -20,6 +20,13 @@ public class MessagingSetup {
 
 	@Bean(name = "activemq")
     public ActiveMQComponent createComponent(ActiveMQConnectionFactory factory) {
+		if (brokerUrl == "CHANGE_WITH_YOURS")
+			brokerUrl = System.getenv("activemq.broker.url");			
+		if (userName == "CHANGE_WITH_YOURS")
+			userName = System.getenv("activemq.broker.username");
+		if (password == "CHANGE_WITH_YOURS")
+			password = System.getenv("activemq.broker.password");
+		
 		ActiveMQComponent activeMQComponent = new ActiveMQComponent();
 		
 		factory.setBrokerURL(brokerUrl);

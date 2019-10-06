@@ -34,6 +34,19 @@ public class TwitterSearcher extends RouteBuilder {
     
     @Override
     public void configure() throws Exception {
+        if (accessToken == "CHANGE_WITH_YOURS")
+            accessToken = System.getenv("twiter.accessToken");			
+		if (accessTokenSecret == "CHANGE_WITH_YOURS")
+            accessTokenSecret = System.getenv("twitter.accessTokenSecret");
+		if (consumerKey == "CHANGE_WITH_YOURS")
+            consumerKey = System.getenv("twitter.consumerKey");
+        if (consumerSecret == "CHANGE_WITH_YOURS")
+            consumerSecret = System.getenv("twitter.consumerSecret");			
+		if (searchDelay == "CHANGE_WITH_YOURS")
+            searchDelay = System.getenv("twitter.search.delay");
+		if (searchTerm == "CHANGE_WITH_YOURS")
+            searchTerm = System.getenv("twitter.search.term");
+        
         TwitterSearchComponent tc = getContext().getComponent("twitter-search", TwitterSearchComponent.class);
         tc.setAccessToken(accessToken);
         tc.setAccessTokenSecret(accessTokenSecret);

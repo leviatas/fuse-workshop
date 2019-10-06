@@ -23,9 +23,8 @@ public class TelegramBot extends RouteBuilder {
         map.put("http.proxyPort", "8080"); 
         
         getContext().setGlobalOptions(map);*/
-        if (token == "CHANGE_WITH_YOURS"){
+        if (token == "CHANGE_WITH_YOURS")
             token = System.getenv("telegram.bot.token");
-        }
 
 
 

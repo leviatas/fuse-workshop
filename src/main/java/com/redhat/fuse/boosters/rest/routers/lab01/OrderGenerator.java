@@ -17,6 +17,9 @@ public class OrderGenerator extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        if (webhookUrl == "CHANGE_WITH_YOURS")
+            webhookUrl = System.getenv("slack.webhookUrl.url");
+
 
         from("timer:generate?repeatCount=5&period=1000")
             .routeId("order_generator")
