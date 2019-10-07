@@ -1,52 +1,60 @@
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Apache Camel By Levi</title>
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-    
-    
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>Apache Camel By Levi</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
 </head>
+
 <body>
-<div class="container">
+  <div class="container">
     <div>
-        <h1>Apache Camel By Levi</h1>
-        </p>
-          <p class="lead">Click <a class="btn btn-info" href="/webjars/swagger-ui/index.html?url=/camel/api-doc&validatorUrl=" target="_blank">API Swagger page</a> to open the REST API's Swagger page.</p>
-   
-    
+      <h1>Apache Camel By Levi</h1>
+      </p>
+      <p class="lead">Click <a class="btn btn-info"
+          href="/webjars/swagger-ui/index.html?url=/camel/api-doc&validatorUrl=" target="_blank">API Swagger page</a> to
+        open the REST API's Swagger page.</p>
+
+
 
     </div>
 
 
 
-</div>
-    
-    
-<p>Click the button to get your coordinates.</p>
+  </div>
 
-<button onclick="getLocation()">Try It</button>
 
-<p id="demo"></p>
+  <p>Click the button to get your coordinates 2.</p>
 
-<script>
-var x = document.getElementById("demo");
+  <button onclick="getLocation()">Try It</button>
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.watchPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-    
-function showPosition(position) {
-    x.innerHTML="Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
-}
-</script>
-    </body>
+  <p id="demo"></p>
+  <div id="mapholder"></div>
+  <script>
+    var x = document.getElementById("demo");
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function showPosition(position) {
+      x.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+      var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+
+      var img_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + latlon + "&zoom=15&size=400x300&sensor=false&markers=color:red%7Clabel:Y%7C" + latlon + "&key=AIzaSyCQegtagbT3sxjnNwIDIOgXNUwiJzo7aQo";
+
+      document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
+    }
+  </script>
+</body>
+
 </html>
-
