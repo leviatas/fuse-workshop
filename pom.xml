@@ -238,6 +238,62 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.8.0</version>
+				<configuration>
+					<nodeVersion>v10.16.3</nodeVersion>
+					<npmVersion>6.9.0</npmVersion>
+					<workingDirectory>src/main/js/frontend</workingDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>Install node and npm locally to the project</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						</execution>
+					<execution>
+						<id>Build frontend</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<!-- <version>3.1.0</version> -->
+				<executions>
+					<execution>
+						<id>Copy frontend build to target</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/META-INF/resources</outputDirectory>
+							<resources>
+								<resource>
+								<directory>${basedir}/src/main/js/frontend/build</directory>
+								<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<repositories>
@@ -259,6 +315,7 @@
 		</repository>
 	</repositories>
 	<pluginRepositories>
+		
 		<pluginRepository>
 			<id>redhat-ga-repository</id>
 			<url>https://maven.repository.redhat.com/ga</url>
@@ -275,6 +332,8 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
+		
+		
 	</pluginRepositories>
 	<profiles>
 		<profile>

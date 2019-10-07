@@ -11,7 +11,8 @@ public class IndexRootMapper extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:/rest-http-index.html");
+        //registry.addViewController("/").setViewName("forward:/rest-http-index.html");
+        registry.addViewController("/").setViewName("forward:/index.html");
     }
 
 }

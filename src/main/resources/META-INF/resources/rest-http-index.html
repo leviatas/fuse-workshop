@@ -18,7 +18,12 @@
           href="/webjars/swagger-ui/index.html?url=/camel/api-doc&validatorUrl=" target="_blank">API Swagger page</a> to
         open the REST API's Swagger page.</p>
 
+        <p>Click the button to get your coordinates 2.</p>
 
+        <button onclick="getLocation()">Try It</button>
+      
+        <p id="demo"></p>
+        <div id="mapholder"></div>
 
     </div>
 
@@ -27,12 +32,7 @@
   </div>
 
 
-  <p>Click the button to get your coordinates 2.</p>
-
-  <button onclick="getLocation()">Try It</button>
-
-  <p id="demo"></p>
-  <div id="mapholder"></div>
+  
   <script>
     var x = document.getElementById("demo");
 
